@@ -32,5 +32,14 @@
     <ClInclude Include="NoRecoil.hpp">
       <Filter>Header Files\Cheats</Filter>
     </ClInclude>
+    <ClInclude Include="CheatManager.hpp">
+      <Filter>Header Files\Cheats</Filter>
+    </ClInclude>
+    <ClInclude Include="BloomReducer.hpp">
+      <Filter>Header Files\Cheats</Filter>
+    </ClInclude>
+    <ClInclude Include="RapidPickup.hpp">
+      <Filter>Header Files\Cheats</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,4 +8,4 @@ void NoRecoilFunc()
 		mouse_event(MOUSEEVENTF_MOVE, 0, 2, 0, 0);
 	}
 }
-auto NoRecoil = NightfallCheat(NoRecoilFunc);
+auto NoRecoil = new NightfallCheat(NoRecoilFunc);

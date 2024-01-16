@@ -131,8 +131,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Auth.hpp" />
+    <ClInclude Include="BloomReducer.hpp" />
+    <ClInclude Include="CheatManager.hpp" />
     <ClInclude Include="NightfallCheat.hpp" />
     <ClInclude Include="NoRecoil.hpp" />
+    <ClInclude Include="RapidPickup.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

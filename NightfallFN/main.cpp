@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Windows.h>
 #include "Auth.hpp"
+#include "CheatManager.hpp"
 
 int main()
 {
@@ -19,7 +20,27 @@ int main()
 
 	system("cls");
 
-	while (true) {}
+	bool bRightShiftPressed = false;
+	while (true)
+	{
+		if (GetAsyncKeyState(VK_RSHIFT) & 0x8000)
+		{
+			if (!bRightShiftPressed)
+			{
+				CheatManager::ToggleCheat(NoRecoil);
+				CheatManager::ToggleCheat(BloomReducer);
+				CheatManager::ToggleCheat(RapidPickup);
+				bRightShiftPressed = true;
+
+				if (NoRecoil->bIsCheatEnabled)
+					std::cout << "[NIGHTFALL] Cheats Enabled!" << std::endl;
+				else
+					std::cout << "[NIGHTFALL] Cheats Disabled!" << std::endl;
+			}
+		}
+		else
+			bRightShiftPressed = false;
+	}
 
 	return 0;
 }
