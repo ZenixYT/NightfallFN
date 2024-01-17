@@ -3,6 +3,7 @@
 #include "Auth.hpp"
 #include "CheatManager.hpp"
 #include "Hooks.hpp"
+#include "BuildTracker.hpp"
 
 int main()
 {
@@ -20,6 +21,17 @@ int main()
 	Auth::promptKey();
 
 	system("cls");
+
+	Keybinds::InitializeKeybinds();
+
+	//BuildTracker::StartBuildTracker();
+
+	//if (false)
+	{
+		CheatManager::ToggleCheat(NoRecoil);
+		CheatManager::ToggleCheat(BloomReducer);
+		CheatManager::ToggleCheat(RapidPickup);
+	}
 
 	Hooks::SetupHooks();
 

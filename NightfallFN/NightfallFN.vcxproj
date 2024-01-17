@@ -132,7 +132,10 @@
   <ItemGroup>
     <ClInclude Include="Auth.hpp" />
     <ClInclude Include="BloomReducer.hpp" />
+    <ClInclude Include="BuildTracker.hpp" />
     <ClInclude Include="CheatManager.hpp" />
+    <ClInclude Include="Hooks.hpp" />
+    <ClInclude Include="Keybinds.hpp" />
     <ClInclude Include="NightfallCheat.hpp" />
     <ClInclude Include="NoRecoil.hpp" />
     <ClInclude Include="RapidPickup.hpp" />

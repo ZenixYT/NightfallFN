@@ -1,14 +1,15 @@
 #pragma once
 #include "NightfallCheat.hpp"
+#include "BuildTracker.hpp"
 
 bool bShouldReduce = true;
 void BloomReducerFunc()
 {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
-		if (bShouldReduce)
+		if (bShouldReduce && !BuildTracker::bIsBuilding)
 		{
-			mouse_event(MOUSEEVENTF_MOVE, 0, 4, 0, 0);
+			mouse_event(MOUSEEVENTF_MOVE, 0, 20, 0, 0);
 			bShouldReduce = false;
 		}
 	}
