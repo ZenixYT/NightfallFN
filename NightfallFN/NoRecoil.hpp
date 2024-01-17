@@ -2,6 +2,11 @@
 #include "NightfallCheat.hpp"
 #include "BuildTracker.hpp"
 
+namespace NoRecoilSettings
+{
+
+}
+
 void NoRecoilFunc()
 {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)

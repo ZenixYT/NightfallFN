@@ -5,18 +5,10 @@
 
 namespace Keybinds
 {
-	enum KEYBIND_TYPE
-	{
-		NONE,
-		WALL, FLOOR, STAIR, PYRAMID, TRAP,
-		SLOT_ONE, SLOT_TWO, SLOT_THREE, SLOT_FOUR, SLOT_FIVE, SLOT_SIX
-	};
-
 	namespace BindSettings
 	{
 		bool bShouldBind = false;
 		std::string sTypeToBind = "NONE";
-		//KEYBIND_TYPE kTypeToBind = KEYBIND_TYPE::NONE;
 	}
 
 	std::map<std::string, int> KeyBinds;

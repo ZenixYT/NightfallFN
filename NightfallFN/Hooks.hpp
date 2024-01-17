@@ -9,8 +9,7 @@ namespace Hooks
 
 	LRESULT CALLBACK LowLevelKeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam)
 	{
-		//TODO: Write keybind code here
-
+		//TODO: Write keybind code here	
 
 		return CallNextHookEx(NULL, nCode, wParam, lParam);
 	}
