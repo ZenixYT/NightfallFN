@@ -4,8 +4,6 @@
 #define PICKUP_SPAM_KEY 0x4C
 #define PICKUP_KEY 0x45
 
-bool bSpamKey = false;
-
 void RapidPickupFunc()
 {
 	if (GetAsyncKeyState(PICKUP_KEY) & 0x8000)

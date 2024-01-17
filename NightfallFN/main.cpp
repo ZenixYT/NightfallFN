@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "Auth.hpp"
 #include "CheatManager.hpp"
+#include "Hooks.hpp"
 
 int main()
 {
@@ -20,27 +21,16 @@ int main()
 
 	system("cls");
 
-	bool bRightShiftPressed = false;
-	while (true)
-	{
-		if (GetAsyncKeyState(VK_RSHIFT) & 0x8000)
-		{
-			if (!bRightShiftPressed)
-			{
-				CheatManager::ToggleCheat(NoRecoil);
-				CheatManager::ToggleCheat(BloomReducer);
-				CheatManager::ToggleCheat(RapidPickup);
-				bRightShiftPressed = true;
+	Hooks::SetupHooks();
 
-				if (NoRecoil->bIsCheatEnabled)
-					std::cout << "[NIGHTFALL] Cheats Enabled!" << std::endl;
-				else
-					std::cout << "[NIGHTFALL] Cheats Disabled!" << std::endl;
-			}
-		}
-		else
-			bRightShiftPressed = false;
+	MSG msg;
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
+
+	Hooks::UnhookHooks();
 
 	return 0;
 }
