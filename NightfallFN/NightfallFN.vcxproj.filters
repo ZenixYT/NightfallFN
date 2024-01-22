@@ -50,5 +50,8 @@
     <ClInclude Include="BuildTracker.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WebServer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

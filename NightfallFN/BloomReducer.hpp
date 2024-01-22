@@ -2,6 +2,11 @@
 #include "NightfallCheat.hpp"
 #include "BuildTracker.hpp"
 
+namespace BloomReducerSettings
+{
+	int mickeysToMove = 20;
+}
+
 bool bShouldReduce = true;
 void BloomReducerFunc()
 {
@@ -9,7 +14,7 @@ void BloomReducerFunc()
 	{
 		if (bShouldReduce && !BuildTracker::bIsBuilding)
 		{
-			mouse_event(MOUSEEVENTF_MOVE, 0, 20, 0, 0);
+			mouse_event(MOUSEEVENTF_MOVE, 0, (DWORD)BloomReducerSettings::mickeysToMove, 0, 0);
 			bShouldReduce = false;
 		}
 	}
