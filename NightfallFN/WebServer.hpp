@@ -4,6 +4,7 @@
 #include <WinSock2.h>
 #include <iostream>
 #include <string>
+#include <thread>
 
 #define PORT 8080
 
@@ -40,49 +41,65 @@ namespace WebServer
 			{
 				std::cout << "Could not start listening!" << std::endl;
 			}
+		}
 
-			std::cout << "Nightfall server listening on port " << PORT << "!" << std::endl; // Replace this by opening the server
+		void RunServer()
+		{
+			std::thread runThread([this]() {
+				std::cout << "Nightfall server listening on port " << PORT << "!" << std::endl; // Replace this by opening the server
 
-			int reqInfo = 0;
-			while (true)
+				int reqInfo = 0;
+				while (true)
+				{
+					this->acceptSocket = accept(this->webSocket, (SOCKADDR*)&server, &server_len);
+					if (this->acceptSocket == INVALID_SOCKET)
+					{
+						std::cout << "Could not accept request!" << std::endl;
+						continue;
+					}
+
+					char buff[30720] = { 0 };
+					reqInfo = recv(this->acceptSocket, buff, BUFFER_SIZE, 0);
+					if (reqInfo < 0)
+					{
+						std::cout << "Could not read request!" << std::endl;
+						continue;
+					}
+
+					std::string request = buff;
+					size_t start = request.find(" ") + 1;
+					size_t end = request.find(" ", start);
+					std::string route = request.substr(start, end - start);
+					std::cout << route << std::endl;
+
+					// sample response (taken from tutorial)
+					SendResponse("<html><h1>Hello World!</h1></html>");
+
+					closesocket(this->acceptSocket);
+				}
+			});
+			runThread.join();
+		}
+
+		void SendResponse(const std::string& response)
+		{
+			std::string serverMessage = "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: ";
+			
+			serverMessage.append(std::to_string(response.size()));
+			serverMessage.append("\n\n");
+			serverMessage.append(response);
+
+			int bytesSent = 0;
+			int totalBytesSent = 0;
+			while (bytesSent < serverMessage.size())
 			{
-				this->acceptSocket = accept(this->webSocket, (SOCKADDR*)&server, &server_len);
-				if (this->acceptSocket == INVALID_SOCKET)
-				{
-					std::cout << "Could not accept request!" << std::endl;
-					continue;
-				}
+				bytesSent = send(this->acceptSocket, serverMessage.c_str(), serverMessage.size(), 0);
+				if (bytesSent < 0)
+					std::cout << "Could not send response!" << std::endl;
 
-				char buff[30720] = { 0 };
-				reqInfo = recv(this->acceptSocket, buff, BUFFER_SIZE, 0);
-				if (reqInfo < 0)
-				{
-					std::cout << "Could not read request!" << std::endl;
-					continue;
-				}
-
-				// sample response (taken from tutorial)
-				std::string serverMessage = "HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: ";
-				std::string response = "<html><h1>Hello World!</h1></html>";
-				
-				serverMessage.append(std::to_string(response.size()));
-				serverMessage.append("\n\n");
-				serverMessage.append(response);
-
-				int bytesSent = 0;
-				int totalBytesSent = 0;
-				while (bytesSent < serverMessage.size())
-				{
-					bytesSent = send(this->acceptSocket, serverMessage.c_str(), serverMessage.size(), 0);
-					if (bytesSent < 0)
-						std::cout << "Could not send response!" << std::endl;
-
-					totalBytesSent += bytesSent;
-				}
-				std::cout << "Sent response to client!" << std::endl;
-
-				closesocket(this->acceptSocket);
+				totalBytesSent += bytesSent;
 			}
+			std::cout << "Sent response to client!" << std::endl;
 		}
 	private:
 		SOCKET webSocket;
@@ -91,6 +108,6 @@ namespace WebServer
 		struct sockaddr_in server;
 		int server_len;
 		int BUFFER_SIZE = 30720;
-
+		bool bIsRunning = false;
 	};
 }

@@ -47,6 +47,10 @@ int main()
 	*/
 
 	auto server = WebServer::NightfallServer();
+	
+	// Add routing here
+	
+	server.RunServer();
 
 	return 0;
 }
