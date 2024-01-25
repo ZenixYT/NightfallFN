@@ -3,8 +3,10 @@
 #pragma comment(lib, "ws2_32.lib")
 #include <WinSock2.h>
 #include <iostream>
+#include <map>
 #include <string>
 #include <thread>
+#include <functional>
 
 #define PORT 8080
 
@@ -101,6 +103,11 @@ namespace WebServer
 			}
 			std::cout << "Sent response to client!" << std::endl;
 		}
+
+		void AddRoute(std::string route, std::function<void(NightfallServer*, char*[])> routeCallback)
+		{
+			this->routeMap[route] = routeCallback;
+		}
 	private:
 		SOCKET webSocket;
 		SOCKET acceptSocket;
@@ -109,5 +116,6 @@ namespace WebServer
 		int server_len;
 		int BUFFER_SIZE = 30720;
 		bool bIsRunning = false;
+		std::map<std::string, std::function<void(NightfallServer*, char*[])>> routeMap{};
 	};
 }
