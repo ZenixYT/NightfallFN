@@ -1,4 +1,4 @@
-#include <iostream>
+#include "WebServer.hpp"
 #include <Windows.h>
 #include "Auth.hpp"
 #include "CheatManager.hpp"
