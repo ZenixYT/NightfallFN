@@ -7,6 +7,7 @@
 
 int main()
 {
+	/*
 	SetConsoleTitleA("Nightfall");
 
 	std::cout << R"(
@@ -43,6 +44,9 @@ int main()
 	}
 
 	Hooks::UnhookHooks();
+	*/
+
+	auto server = WebServer::NightfallServer();
 
 	return 0;
 }
