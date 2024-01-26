@@ -37,7 +37,6 @@ namespace WebServer
 	{
 		std::string routeName;
 		std::vector<std::string> argv;
-		std::function<void(NightfallServer*, ServerRoute*)> routeFunc;
 	};
 
 	class NightfallServer
@@ -167,9 +166,7 @@ namespace WebServer
 			else
 				srRoute.routeName = route;
 
-			srRoute.routeFunc = routeCallback;
-
-			this->routeVec.push_back(srRoute);
+			routeMap.insert(srRoute, routeCallback);
 		}
 	private:
 		SOCKET webSocket;
@@ -179,6 +176,6 @@ namespace WebServer
 		int server_len;
 		int BUFFER_SIZE = 30720;
 		bool bIsRunning = false;
-		std::vector<ServerRoute> routeVec;
+		std::map<ServerRoute, std::function<void(NightfallServer*, ServerRoute*)>> routeMap;
 	};
 }
