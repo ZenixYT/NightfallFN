@@ -142,6 +142,7 @@
     <ClInclude Include="NightfallCheat.hpp" />
     <ClInclude Include="NoRecoil.hpp" />
     <ClInclude Include="RapidPickup.hpp" />
+    <ClInclude Include="Utils.hpp" />
     <ClInclude Include="WebServer.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

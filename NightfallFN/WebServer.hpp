@@ -14,10 +14,30 @@
 
 namespace WebServer
 {
+	class NightfallServer;
+
+	namespace ServerUtils
+	{
+		std::map<std::string, std::string> ParseParametersFromRoute(std::string route)
+		{
+			auto params = Utils::splitString(Utils::splitString(route, '?')[1], '&');
+			std::map<std::string, std::string> toRet;
+
+			for (int i = 0; i < params.size(); i++)
+			{
+				auto param = Utils::splitString(params[i], '=');
+				toRet.insert(param[0], param[1]);
+			}
+
+			return toRet;
+		}
+	}
+
 	struct ServerRoute
 	{
 		std::string routeName;
 		std::vector<std::string> argv;
+		std::function<void(NightfallServer*, ServerRoute*)> routeFunc;
 	};
 
 	class NightfallServer
@@ -112,7 +132,24 @@ namespace WebServer
 			std::cout << "Sent response to client!" << std::endl;
 		}
 
-		void AddRoute(std::string route, std::function<void(NightfallServer*, char*[])> routeCallback)
+		ServerRoute* PingRoute(std::string route)
+		{
+			auto params = ServerUtils::ParseParametersFromRoute(route);
+			auto routeName = Utils::splitString(route, '?')[0];
+
+			for (int i = 0; i < routeVec.size(); i++)
+			{
+				ServerRoute route = routeVec[i];
+				if (route.routeName == routeName)
+				{
+					return &route;
+				}
+			}
+
+			return nullptr;
+		}	
+
+		void AddRoute(std::string route, std::function<void(NightfallServer*, ServerRoute*)> routeCallback)
 		{
 			ServerRoute srRoute;
 
@@ -129,6 +166,8 @@ namespace WebServer
 			}
 			else
 				srRoute.routeName = route;
+
+			srRoute.routeFunc = routeCallback;
 
 			this->routeVec.push_back(srRoute);
 		}
