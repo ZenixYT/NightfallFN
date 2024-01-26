@@ -4,14 +4,22 @@
 #include <WinSock2.h>
 #include <iostream>
 #include <map>
+#include <vector>
 #include <string>
 #include <thread>
 #include <functional>
+#include "Utils.hpp"
 
 #define PORT 8080
 
 namespace WebServer
 {
+	struct ServerRoute
+	{
+		std::string routeName;
+		std::vector<std::string> argv;
+	};
+
 	class NightfallServer
 	{
 	public:
@@ -75,7 +83,7 @@ namespace WebServer
 					std::cout << route << std::endl;
 
 					// sample response (taken from tutorial)
-					SendResponse("<html><h1>Hello World!</h1></html>");
+					this->SendResponse("<html><h1>Whoops!\nThe page you were looking for wasn't found!</h1></html>");
 
 					closesocket(this->acceptSocket);
 				}
@@ -106,7 +114,23 @@ namespace WebServer
 
 		void AddRoute(std::string route, std::function<void(NightfallServer*, char*[])> routeCallback)
 		{
-			this->routeMap[route] = routeCallback;
+			ServerRoute srRoute;
+
+			if (route.find("?") != std::string::npos)
+			{
+				srRoute.routeName = Utils::splitString(route, '?')[0];
+			
+				auto params = Utils::splitString(srRoute.routeName, '&');
+				for (int i = 0; i < params.size(); i++)
+				{
+					if (params[i].find("=") != std::string::npos)
+						srRoute.argv.push_back(Utils::splitString(params[i], '=')[0]);
+				}
+			}
+			else
+				srRoute.routeName = route;
+
+			this->routeVec.push_back(srRoute);
 		}
 	private:
 		SOCKET webSocket;
@@ -116,6 +140,6 @@ namespace WebServer
 		int server_len;
 		int BUFFER_SIZE = 30720;
 		bool bIsRunning = false;
-		std::map<std::string, std::function<void(NightfallServer*, char*[])>> routeMap{};
+		std::vector<ServerRoute> routeVec;
 	};
 }
