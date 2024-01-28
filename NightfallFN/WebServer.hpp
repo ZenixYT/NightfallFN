@@ -136,12 +136,11 @@ namespace WebServer
 			auto params = ServerUtils::ParseParametersFromRoute(route);
 			auto routeName = Utils::splitString(route, '?')[0];
 
-			for (int i = 0; i < routeVec.size(); i++)
+			for (const auto& pair : routeMap)
 			{
-				ServerRoute route = routeVec[i];
-				if (route.routeName == routeName)
+				if (pair.first.routeName == routeName)
 				{
-					return &route;
+					return &pair.first;
 				}
 			}
 
@@ -166,7 +165,7 @@ namespace WebServer
 			else
 				srRoute.routeName = route;
 
-			routeMap.insert(srRoute, routeCallback);
+			this->routeMap.insert({srRoute, routeCallback});
 		}
 	private:
 		SOCKET webSocket;
