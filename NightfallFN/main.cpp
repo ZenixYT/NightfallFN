@@ -47,7 +47,7 @@ int main()
 	*/
 
 	auto server = WebServer::NightfallServer();
-	
+
 	server.RunServer();
 
 	return 0;

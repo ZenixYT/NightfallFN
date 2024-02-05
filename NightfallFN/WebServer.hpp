@@ -14,8 +14,6 @@
 
 namespace WebServer
 {
-	class NightfallServer;
-
 	namespace ServerUtils
 	{
 		std::map<std::string, std::string> ParseParametersFromRoute(std::string route)
@@ -26,7 +24,7 @@ namespace WebServer
 			for (int i = 0; i < params.size(); i++)
 			{
 				auto param = Utils::splitString(params[i], '=');
-				toRet.insert(param[0], param[1]);
+				toRet.insert({param[0], param[1]});
 			}
 
 			return toRet;
@@ -101,8 +99,10 @@ namespace WebServer
 					std::string route = request.substr(start, end - start);
 					std::cout << route << std::endl;
 
-					// sample response (taken from tutorial)
-					this->SendResponse("<html><h1>Whoops!\nThe page you were looking for wasn't found!</h1></html>");
+					// sample response
+					auto params = ServerUtils::ParseParametersFromRoute(route);
+					
+					//this->SendResponse("<html><h1>Whoops!\nThe page you were looking for wasn't found!</h1></html>");
 
 					closesocket(this->acceptSocket);
 				}
@@ -136,17 +136,24 @@ namespace WebServer
 			auto params = ServerUtils::ParseParametersFromRoute(route);
 			auto routeName = Utils::splitString(route, '?')[0];
 
-			for (int i = 0; i < routeVec.size(); i++)
+
+			for (auto& entry : routeMap)
 			{
-				ServerRoute route = routeVec[i];
-				if (route.routeName == routeName)
+				if (entry.first->routeName == route)
 				{
-					return &route;
+					return entry.first;
 				}
 			}
 
 			return nullptr;
-		}	
+		}
+
+		std::function<void(NightfallServer*, ServerRoute*)> GetCallbackFromRoute(ServerRoute* route)
+		{
+			auto it = routeMap.find(route);
+			if (it != routeMap.end())
+				return it->second;
+		}
 
 		void AddRoute(std::string route, std::function<void(NightfallServer*, ServerRoute*)> routeCallback)
 		{
@@ -166,7 +173,7 @@ namespace WebServer
 			else
 				srRoute.routeName = route;
 
-			routeMap.insert(srRoute, routeCallback);
+			routeMap.insert({ &srRoute, routeCallback });
 		}
 	private:
 		SOCKET webSocket;
@@ -176,6 +183,6 @@ namespace WebServer
 		int server_len;
 		int BUFFER_SIZE = 30720;
 		bool bIsRunning = false;
-		std::map<ServerRoute, std::function<void(NightfallServer*, ServerRoute*)>> routeMap;
+		std::map<ServerRoute*, std::function<void(NightfallServer*, ServerRoute*)>> routeMap;
 	};
 }
