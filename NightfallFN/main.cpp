@@ -48,6 +48,10 @@ int main()
 
 	auto server = WebServer::NightfallServer();
 
+	server.AddRoute("/", ()[] {
+
+		})
+
 	server.RunServer();
 
 	return 0;

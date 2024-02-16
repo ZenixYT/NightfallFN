@@ -10,7 +10,7 @@
 #include <functional>
 #include "Utils.hpp"
 
-#define PORT 8080
+#define PORT 80
 
 namespace WebServer
 {
