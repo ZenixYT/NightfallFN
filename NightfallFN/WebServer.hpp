@@ -18,9 +18,12 @@ namespace WebServer
 	{
 		std::map<std::string, std::string> ParseParametersFromRoute(std::string route)
 		{
-			auto params = Utils::splitString(Utils::splitString(route, '?')[1], '&');
 			std::map<std::string, std::string> toRet;
+			if (route.find("?") == std::string::npos)
+				return toRet;
 
+			auto params = Utils::splitString(Utils::splitString(route, '?')[1], '&');
+			
 			for (int i = 0; i < params.size(); i++)
 			{
 				auto param = Utils::splitString(params[i], '=');
@@ -35,6 +38,16 @@ namespace WebServer
 	{
 		std::string routeName;
 		std::vector<std::string> argv;
+
+		bool operator<(const ServerRoute& other) const
+		{
+			// Compare routeName
+			if (routeName != other.routeName)
+				return routeName < other.routeName;
+
+			// Compare argv
+			return argv < other.argv;
+		};
 	};
 
 	class NightfallServer
@@ -97,12 +110,14 @@ namespace WebServer
 					size_t start = request.find(" ") + 1;
 					size_t end = request.find(" ", start);
 					std::string route = request.substr(start, end - start);
-					std::cout << route << std::endl;
+					std::cout << '"' << route << '"' << std::endl;
 
 					// sample response
-					auto params = ServerUtils::ParseParametersFromRoute(route);
+					//auto params = ServerUtils::ParseParametersFromRoute(route);
 					
-					//this->SendResponse("<html><h1>Whoops!\nThe page you were looking for wasn't found!</h1></html>");
+					ServerRoute aRoute = PingRoute("/");
+					auto cb = GetCallbackFromRoute(aRoute);
+					cb(this, &aRoute);
 
 					closesocket(this->acceptSocket);
 				}
@@ -131,24 +146,24 @@ namespace WebServer
 			std::cout << "Sent response to client!" << std::endl;
 		}
 
-		ServerRoute* PingRoute(std::string route)
+		ServerRoute PingRoute(std::string route)
 		{
 			auto params = ServerUtils::ParseParametersFromRoute(route);
-			auto routeName = Utils::splitString(route, '?')[0];
-
+			auto routeName = (route.find("?") != std::string::npos) ? Utils::splitString(route, '?')[0] : route;
 
 			for (auto& entry : routeMap)
 			{
-				if (entry.first->routeName == route)
+				std::cout << entry.first.routeName << std::endl;
+				if (entry.first.routeName == route)
 				{
 					return entry.first;
 				}
 			}
 
-			return nullptr;
+			return ServerRoute{"ERROR", std::vector<std::string>()};
 		}
 
-		std::function<void(NightfallServer*, ServerRoute*)> GetCallbackFromRoute(ServerRoute* route)
+		std::function<void(NightfallServer*, ServerRoute*)> GetCallbackFromRoute(ServerRoute route)
 		{
 			auto it = routeMap.find(route);
 			if (it != routeMap.end())
@@ -173,7 +188,7 @@ namespace WebServer
 			else
 				srRoute.routeName = route;
 
-			routeMap.insert({ &srRoute, routeCallback });
+			routeMap.insert({ srRoute, routeCallback });
 		}
 	private:
 		SOCKET webSocket;
@@ -183,6 +198,6 @@ namespace WebServer
 		int server_len;
 		int BUFFER_SIZE = 30720;
 		bool bIsRunning = false;
-		std::map<ServerRoute*, std::function<void(NightfallServer*, ServerRoute*)>> routeMap;
+		std::map<ServerRoute, std::function<void(NightfallServer*, ServerRoute*)>> routeMap;
 	};
 }
