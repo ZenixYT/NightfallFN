@@ -115,9 +115,16 @@ namespace WebServer
 					// sample response
 					//auto params = ServerUtils::ParseParametersFromRoute(route);
 					
-					ServerRoute aRoute = PingRoute("/");
-					auto cb = GetCallbackFromRoute(aRoute);
-					cb(this, &aRoute);
+					ServerRoute aRoute = PingRoute(route);
+					if (aRoute.routeName != "ERROR")
+					{
+						auto cb = GetCallbackFromRoute(aRoute);
+						cb(this, &aRoute);
+					}
+					else
+					{
+						this->SendResponse("404");
+					}
 
 					closesocket(this->acceptSocket);
 				}
@@ -154,7 +161,7 @@ namespace WebServer
 			for (auto& entry : routeMap)
 			{
 				std::cout << entry.first.routeName << std::endl;
-				if (entry.first.routeName == route)
+				if (entry.first.routeName == routeName)
 				{
 					return entry.first;
 				}

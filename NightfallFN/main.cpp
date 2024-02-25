@@ -49,8 +49,12 @@ int main()
 	auto server = WebServer::NightfallServer();
 
 	server.AddRoute("/", [](WebServer::NightfallServer* server, WebServer::ServerRoute* route) {
-		server->SendResponse("Lol");
+		server->SendResponse("Home");
 		});
+
+	server.AddRoute("/lol?name=<name>", [](WebServer::NightfallServer* server, WebServer::ServerRoute* route) {
+		server->SendResponse(route->argv[0]);
+	});
 
 	server.RunServer();
 
