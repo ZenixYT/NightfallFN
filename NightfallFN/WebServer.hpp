@@ -153,6 +153,23 @@ namespace WebServer
 			std::cout << "Sent response to client!" << std::endl;
 		}
 
+		void SendRedirect(const std::string& location)
+		{
+			std::string serverMessage = "HTTP/1.1 302 Found\r\nLocation: " + location;
+
+			int bytesSent = 0;
+			int totalBytesSent = 0;
+			while (bytesSent < serverMessage.size())
+			{
+				bytesSent = send(this->acceptSocket, serverMessage.c_str(), serverMessage.size(), 0);
+				if (bytesSent < 0)
+					std::cout << "Could not send response!" << std::endl;
+
+				totalBytesSent += bytesSent;
+			}
+			std::cout << "Sent response to client!" << std::endl;
+		}
+
 		ServerRoute PingRoute(std::string route)
 		{
 			auto params = ServerUtils::ParseParametersFromRoute(route);

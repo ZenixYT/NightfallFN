@@ -138,12 +138,19 @@
     <ClInclude Include="BuildTracker.hpp" />
     <ClInclude Include="CheatManager.hpp" />
     <ClInclude Include="Hooks.hpp" />
+    <ClInclude Include="HTML.hpp" />
     <ClInclude Include="Keybinds.hpp" />
     <ClInclude Include="NightfallCheat.hpp" />
     <ClInclude Include="NoRecoil.hpp" />
     <ClInclude Include="RapidPickup.hpp" />
     <ClInclude Include="Utils.hpp" />
     <ClInclude Include="WebServer.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="home.html" />
+    <None Include="html2.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

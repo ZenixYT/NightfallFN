@@ -4,7 +4,7 @@
 
 namespace Auth
 {
-	std::string sCorrectKey = "nightfall-faggot-tranny";
+	std::string sCorrectKey = "nightfall-test-key";
 	bool checkKey(std::string keyToCheck)
 	{
 		if (keyToCheck == sCorrectKey)

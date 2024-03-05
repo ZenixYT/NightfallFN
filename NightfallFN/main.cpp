@@ -4,10 +4,17 @@
 #include "CheatManager.hpp"
 #include "Hooks.hpp"
 #include "BuildTracker.hpp"
+#include "HTML.hpp"
+
+HMODULE GCM()
+{
+	HMODULE hModule = NULL;
+	GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, (LPCTSTR)GCM, &hModule);
+	return hModule;
+}
 
 int main()
 {
-	/*
 	SetConsoleTitleA("Nightfall");
 
 	std::cout << R"(
@@ -23,7 +30,7 @@ int main()
 
 	system("cls");
 
-	Keybinds::InitializeKeybinds();
+	/*Keybinds::InitializeKeybinds();
 
 	//BuildTracker::StartBuildTracker();
 
@@ -49,11 +56,11 @@ int main()
 	auto server = WebServer::NightfallServer();
 
 	server.AddRoute("/", [](WebServer::NightfallServer* server, WebServer::ServerRoute* route) {
-		server->SendResponse("Home");
-		});
+		server->SendRedirect("/home");
+	});
 
-	server.AddRoute("/lol?name=<name>", [](WebServer::NightfallServer* server, WebServer::ServerRoute* route) {
-		server->SendResponse(route->argv[0]);
+	server.AddRoute("/home", [](WebServer::NightfallServer* server, WebServer::ServerRoute* route) {
+		server->SendResponse(HTML::home_html);
 	});
 
 	server.RunServer();

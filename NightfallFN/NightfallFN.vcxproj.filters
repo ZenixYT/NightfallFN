@@ -16,6 +16,9 @@
     <Filter Include="Header Files\Cheats">
       <UniqueIdentifier>{d547f187-9030-49f7-b73b-fc7221430bc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Web">
+      <UniqueIdentifier>{b8271d84-ce2f-4525-9c32-eee8d81139d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -56,5 +59,12 @@
     <ClInclude Include="Utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HTML.hpp">
+      <Filter>Header Files\Web</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="html2.htm" />
+    <None Include="home.html" />
   </ItemGroup>
 </Project>
