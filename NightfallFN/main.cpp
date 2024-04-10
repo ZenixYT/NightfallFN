@@ -5,6 +5,7 @@
 #include "Hooks.hpp"
 #include "BuildTracker.hpp"
 #include "HTML.hpp"
+#include "WebsocketServer.hpp"
 
 HMODULE GCM()
 {
@@ -26,9 +27,9 @@ int main()
         \/    /_____/       \/                    \/             
 )" << std::endl;
 
-	Auth::promptKey();
+	//Auth::promptKey();
 
-	system("cls");
+	//system("cls");
 
 	/*Keybinds::InitializeKeybinds();
 
@@ -53,7 +54,9 @@ int main()
 	Hooks::UnhookHooks();
 	*/
 
-	auto server = WebServer::NightfallServer();
+	WebSocketServer::StartServer();
+
+	/*auto server = WebServer::NightfallServer();
 
 	server.AddRoute("/", [](WebServer::NightfallServer* server, WebServer::ServerRoute* route) {
 		server->SendRedirect("/home");
@@ -63,7 +66,7 @@ int main()
 		server->SendResponse(HTML::home_html);
 	});
 
-	server.RunServer();
+	server.RunServer();*/
 
 	return 0;
 }

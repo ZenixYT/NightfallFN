@@ -62,6 +62,9 @@
     <ClInclude Include="HTML.hpp">
       <Filter>Header Files\Web</Filter>
     </ClInclude>
+    <ClInclude Include="WebsocketServer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="html2.htm" />
