@@ -143,6 +143,7 @@
     <ClInclude Include="CheatManager.hpp" />
     <ClInclude Include="Hooks.hpp" />
     <ClInclude Include="HTML.hpp" />
+    <ClInclude Include="JSONParser.hpp" />
     <ClInclude Include="Keybinds.hpp" />
     <ClInclude Include="NightfallCheat.hpp" />
     <ClInclude Include="NoRecoil.hpp" />

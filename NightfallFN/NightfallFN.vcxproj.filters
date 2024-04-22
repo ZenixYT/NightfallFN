@@ -19,6 +19,9 @@
     <Filter Include="Header Files\Web">
       <UniqueIdentifier>{b8271d84-ce2f-4525-9c32-eee8d81139d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Websockets">
+      <UniqueIdentifier>{ec6649fe-2421-4a0b-a533-1ad4cd409d62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,7 +66,10 @@
       <Filter>Header Files\Web</Filter>
     </ClInclude>
     <ClInclude Include="WebsocketServer.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Websockets</Filter>
+    </ClInclude>
+    <ClInclude Include="JSONParser.hpp">
+      <Filter>Header Files\Websockets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

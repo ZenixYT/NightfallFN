@@ -1,5 +1,5 @@
 #pragma once
-#define PORT 9090
+#define PORT 90
 
 #include <iostream>
 #include <websocketpp/config/asio_no_tls.hpp>
@@ -16,16 +16,16 @@ namespace WebSocketServer
 
 	int StartServer()
 	{
-		server print_server;
+		server wsServer;
 
-		print_server.set_message_handler(&on_message);
-		print_server.set_access_channels(websocketpp::log::alevel::all);
-		print_server.set_error_channels(websocketpp::log::elevel::all);
+		wsServer.set_message_handler(&on_message);
+		wsServer.set_access_channels(websocketpp::log::alevel::all);
+		wsServer.set_error_channels(websocketpp::log::elevel::all);
 
-		print_server.init_asio();
-		print_server.listen(PORT);
-		print_server.start_accept();
+		wsServer.init_asio();
+		wsServer.listen(PORT);
+		wsServer.start_accept();
 
-		print_server.run();
+		wsServer.run();
 	}
 }
