@@ -170,6 +170,19 @@ namespace WebServer
 			std::cout << "Sent response to client!" << std::endl;
 		}
 
+		void SendHTML(const std::string& location)
+		{
+			std::string htmlContent = Utils::readFile(location);
+			if (htmlContent != "")
+			{
+				this->SendResponse(htmlContent);
+			}
+			else
+			{
+				this->SendResponse("404");
+			}
+		}
+
 		ServerRoute PingRoute(std::string route)
 		{
 			auto params = ServerUtils::ParseParametersFromRoute(route);

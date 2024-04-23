@@ -72,8 +72,4 @@
       <Filter>Header Files\Websockets</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="html2.htm" />
-    <None Include="home.html" />
-  </ItemGroup>
 </Project>

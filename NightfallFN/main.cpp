@@ -31,16 +31,32 @@ int main()
 
 	//system("cls");
 
-	/*Keybinds::InitializeKeybinds();
+	Keybinds::InitializeKeybinds();
 
 	//BuildTracker::StartBuildTracker();
 
 	//if (false)
 	{
 		CheatManager::ToggleCheat(NoRecoil);
-		CheatManager::ToggleCheat(BloomReducer);
-		CheatManager::ToggleCheat(RapidPickup);
+		//CheatManager::ToggleCheat(BloomReducer);
+		//CheatManager::ToggleCheat(RapidPickup);
 	}
+
+	// Let's start the WebSocket server
+	auto wsServer = new WebSocketServer::NightfallWebSocketServer();
+	wsServer->start();
+
+	auto server = WebServer::NightfallServer();
+
+	server.AddRoute("/", [](WebServer::NightfallServer* server, WebServer::ServerRoute* route) {
+		server->SendRedirect("/home");
+	});
+
+	server.AddRoute("/home", [](WebServer::NightfallServer* server, WebServer::ServerRoute* route) {
+		server->SendHTML("res/html/home.html");
+	});
+
+	server.RunServer();
 
 	Hooks::SetupHooks();
 
@@ -52,21 +68,6 @@ int main()
 	}
 
 	Hooks::UnhookHooks();
-	*/
-
-	WebSocketServer::StartServer();
-
-	/*auto server = WebServer::NightfallServer();
-
-	server.AddRoute("/", [](WebServer::NightfallServer* server, WebServer::ServerRoute* route) {
-		server->SendRedirect("/home");
-	});
-
-	server.AddRoute("/home", [](WebServer::NightfallServer* server, WebServer::ServerRoute* route) {
-		server->SendResponse(HTML::home_html);
-	});
-
-	server.RunServer();*/
 
 	return 0;
 }

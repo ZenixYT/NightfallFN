@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <iostream>
+#include <fstream>
 
 namespace Utils
 {
@@ -16,4 +18,23 @@ namespace Utils
         tokens.push_back(s.substr(start));
         return tokens;
 	}
+
+    std::string readFile(const std::string& file_path) {
+        std::ifstream file(file_path);
+        std::string file_contents;
+
+        if (file.is_open()) {
+            std::string line;
+            while (std::getline(file, line)) {
+                file_contents += line;
+                file_contents.push_back('\n');
+            }
+            file.close();
+        }
+        else {
+            std::cerr << "Unable to open file: " << file_path << std::endl;
+        }
+
+        return file_contents;
+    }
 }

@@ -152,12 +152,6 @@
     <ClInclude Include="WebServer.hpp" />
     <ClInclude Include="WebsocketServer.hpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="home.html" />
-    <None Include="html2.htm">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

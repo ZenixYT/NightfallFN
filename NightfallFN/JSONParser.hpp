@@ -24,7 +24,13 @@ namespace JSONParser
 				{
 					int value = change["value"];
 					recoilMag = (DWORD)value;
+					std::cout << recoilMag << std::endl;
 				}
+				/*else if (setting == "isEnabled")
+				{
+					auto value = change["value"];
+					std::cout << value << std::endl;
+				}*/
 			}
 		}
 	}
